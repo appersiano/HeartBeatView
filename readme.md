@@ -27,6 +27,7 @@ There are xml and code versions
 * Scale factor is the amount of size increase/decrease of the heart icon
 * Duration is the time in milliseconds for a complete beat (decrease and increase)
 * Duration for BPM - calculates and sets the duration based on the BPM (beats per minute)
+* Active vibration of the heart and set for how long vibrate
 * Tint (same as on ImageView)
 
 
@@ -42,10 +43,11 @@ add remote maven url
             url "https://jitpack.io"
         }
     }
+    
 then add a library dependency
 
     dependencies {
-        compile 'com.github.scottyab:HeartBeatView:0.0.1'
+        compile 'com.github.scottyab:HeartBeatView:master-SNAPSHOT'
     }
 
 
