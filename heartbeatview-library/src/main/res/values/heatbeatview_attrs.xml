@@ -4,6 +4,8 @@
     <declare-styleable name="HeartBeatView">
         <attr name="scaleFactor" format="float" />
         <attr name="duration" format="integer" />
+        <attr name="vibration" format="boolean" />
+        <attr name="vibrationMillis" format="integer" />
     </declare-styleable>
 
 </resources>

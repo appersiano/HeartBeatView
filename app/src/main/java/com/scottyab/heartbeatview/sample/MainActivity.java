@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private HeartBeatView heartbeat3;
     private SeekBar beatsPerMinSeek;
     private TextView bpmTV;
+    private CheckBox checkBoxVibration;
 
 
     @Override
@@ -35,7 +38,17 @@ public class MainActivity extends AppCompatActivity {
         heartbeat3 = (HeartBeatView) findViewById(R.id.heartbeat3);
         bpmTV = (TextView) findViewById(R.id.bpm);
         beatsPerMinSeek = (SeekBar) findViewById(R.id.beatsPerMinSeek);
+        checkBoxVibration = (CheckBox) findViewById(R.id.checkBoxVibration);
 
+
+        checkBoxVibration.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                heartbeat.setActiveVibration(isChecked);
+                heartbeat2.setActiveVibration(isChecked);
+                heartbeat3.setActiveVibration(isChecked);
+            }
+        });
 
         heartbeat2.setDurationBasedOnBPM(50);
         beatsPerMinSeek.setMax(150);

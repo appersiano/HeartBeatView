@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.os.Vibrator;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
@@ -19,6 +20,7 @@ public class HeartBeatView extends AppCompatImageView {
 
     private static final float DEFAULT_SCALE_FACTOR = 0.2f;
     private static final int DEFAULT_DURATION = 50;
+    public int vibrationMillis = 250;
     private Drawable heartDrawable;
 
     private boolean heartBeating = false;
@@ -26,6 +28,8 @@ public class HeartBeatView extends AppCompatImageView {
     float scaleFactor = DEFAULT_SCALE_FACTOR;
     float reductionScaleFactor = -scaleFactor;
     int duration = DEFAULT_DURATION;
+    private Vibrator vibrator;
+    private boolean activeVibration = false;
 
     public HeartBeatView(Context context) {
         super(context);
@@ -48,7 +52,40 @@ public class HeartBeatView extends AppCompatImageView {
         //make this not mandatory
         heartDrawable = ContextCompat.getDrawable(getContext(), R.drawable.ic_heart_red_24dp);
         setImageDrawable(heartDrawable);
+        vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
 
+    }
+
+    /**
+     * Set vibration parameter
+     * @param activeVibration
+     */
+    public void setActiveVibration(boolean activeVibration) {
+        this.activeVibration = activeVibration;
+    }
+
+    /**
+     * Get if vibration is active
+     * @return
+     */
+    public boolean isActiveVibration() {
+        return activeVibration;
+    }
+
+    /**
+     * Get the milliseconds of the vibration
+     * @return
+     */
+    public int getVibrationMillis() {
+        return vibrationMillis;
+    }
+
+    /**
+     * Set milliseconds of the vibration
+     * @param vibrationMillis
+     */
+    public void setVibrationMillis(int vibrationMillis) {
+        this.vibrationMillis = vibrationMillis;
     }
 
     private void populateFromAttributes(Context context, AttributeSet attrs) {
@@ -61,7 +98,8 @@ public class HeartBeatView extends AppCompatImageView {
             scaleFactor = a.getFloat(R.styleable.HeartBeatView_scaleFactor, DEFAULT_SCALE_FACTOR);
             reductionScaleFactor = -scaleFactor;
             duration = a.getInteger(R.styleable.HeartBeatView_duration, DEFAULT_DURATION);
-
+            activeVibration = a.getBoolean(R.styleable.HeartBeatView_vibration, false);
+            vibrationMillis = a.getInteger(R.styleable.HeartBeatView_vibrationMillis, vibrationMillis);
 
         } finally {
             a.recycle();
@@ -153,6 +191,10 @@ public class HeartBeatView extends AppCompatImageView {
         public void onAnimationEnd(Animator animation) {
             //we ignore heartBeating as we want to ensure the heart is reduced back to original size
             animate().scaleXBy(reductionScaleFactor).scaleYBy(reductionScaleFactor).setDuration(duration).setListener(scaleDownListener);
+
+            // Vibrate for 500 milliseconds
+            if (activeVibration)
+                vibrator.vibrate(vibrationMillis);
         }
 
         @Override

@@ -25,10 +25,17 @@
             android:background="@color/colorPrimary" />
 
 
+        <CheckBox
+            android:id="@+id/checkBoxVibration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Active Vibration (all hearts)" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
             android:orientation="horizontal">
 
             <ToggleButton
